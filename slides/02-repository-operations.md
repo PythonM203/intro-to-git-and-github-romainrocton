@@ -30,6 +30,9 @@ What happens when you run `git init`:
 - Creates a hidden `.git` folder
 - Sets up Git tracking for this directory
 - Creates the default branch (usually `main`)
+- When you initialize a repository in a subfolder inside an existing Git repository, these two repositories will be independent of each other.
+- Not a good practice, but common inside of codespaces in GiHub. 
+
 
 ### Method 2: Initialize with a Specific Branch Name
 
@@ -38,7 +41,34 @@ What happens when you run `git init`:
 git init --initial-branch=main
 # or shorter
 git init -b main
+
+echo "# My Awesome Project" > README.md
+git add README.md
+git commit -m "Initial commit: Add README"
+
+
 ```
+
+Some setup to use GitHub CLI (gh):
+```bash
+# Delete GITHUB_TOKEN if exists
+unset GITHUB_TOKEN
+# login 
+gh auth login
+
+gh repo create my-awesome-project --public --source=. --push
+
+```
+
+Delete a repository on GitHub:
+```bash
+gh auth refresh -h github.com -s delete_repo
+gh repo delete USERNAME/my-awesome-project 
+cd ..
+rm -rf my-awesome-project
+```
+
+The `-rf` flag is used to forcefully remove the directory and its contents without prompting for confirmation. Use with caution!
 
 ### Method 3: Create Repository on GitHub First
 
@@ -166,8 +196,6 @@ git status -s
 
 ### View Repository Information
 ```bash
-# See remote information
-git remote -v
 
 # See all branches
 git branch -a
@@ -175,34 +203,11 @@ git branch -a
 # See commit history
 git log --oneline
 
-# See repository configuration
-git config --list
 ```
 
 ## 🎯 Practical Examples
 
-### Example 1: Start a New Project
-
-```bash
-# 1. Create and navigate to project directory
-mkdir my-website
-cd my-website
-
-# 2. Initialize Git
-git init
-
-# 3. Create a README file
-echo "# My Awesome Website" > README.md
-
-# 4. Add and commit
-git add README.md
-git commit -m "Initial commit: Add README"
-
-# 5. Create repository on GitHub (using gh CLI)
-gh repo create my-website --public --source=. --push
-```
-
-### Example 2: Contribute to Open Source
+### Example Contribute to Open Source
 
 ```bash
 # 1. Fork the repository on GitHub (web interface or gh CLI)
@@ -211,7 +216,7 @@ gh repo fork microsoft/vscode --clone
 # 2. Navigate to the cloned directory
 cd vscode
 
-# 3. Add upstream remote
+# 3. Add upstream remote (might exist already)
 git remote add upstream https://github.com/microsoft/vscode.git
 
 # 4. Verify remotes
@@ -219,7 +224,38 @@ git remote -v
 
 # 5. Create a feature branch (we'll cover this in Module 4)
 git checkout -b my-feature-branch
+
+# 6. Make changes, commit, and push to your fork
+echo "Some changes" >> README.md
+git add README.md
+git commit -m "Add some changes to README"
 ```
+
+- Git and GitHub use different authentication methods, so you might be force to override these conflicts
+
+```bash
+git config --global --unset credential.helper || true
+git config --global --add credential.helper '!gh auth git-credential'
+# Verify 
+git config --show-origin --get-all credential.helper
+# 2) Remove any saved bad HTTPS credentials
+test -f ~/.git-credentials && cp ~/.git-credentials ~/.git-credentials.bak && rm ~/.git-credentials
+# 3) Ensure no env tokens override
+unset GH_TOKEN GIT_ASKPASS SSH_ASKPASS
+# Push 
+git push -u origin my-feature-branch
+```
+
+- Go to the fork url and check the new branch. 
+- Remove the subfolder since we dont need it anymore
+```bash
+# switch back to main branch
+git checkout main
+cd ..
+rm -rf vscode
+```
+
+
 
 ### Example 3: Clone and Explore
 
@@ -231,31 +267,49 @@ git clone https://github.com/octocat/Hello-World.git
 cd Hello-World
 
 # 3. Explore the repository
-ls -la
+ls -la # List all files, the -la shows hidden files
 git status
 git log --oneline
 git remote -v
 ```
 
+- Look how the remote url is set to the original repository, not your fork
+
 ## 🔍 Inspecting Repository Contents
 
 ### View Files and Directories
 ```bash
-# List all files (including hidden)
-ls -la
-
 # See what Git is tracking
 git ls-files
-
-# Check .gitignore
-cat .gitignore
 ```
 
-### Understanding .git Directory
-```bash
-# WARNING: Don't modify these files manually!
-ls .git/
+### The .gitignore File
+
+- Specifies files/folders Git should ignore
+- Commonly used to ignore:
+  - Build files
+  - Dependency directories (e.g., `node_modules/`)
+  - Sensitive information (e.g., `.env`)
+
+In your vscode editr, create a `.gitignore` file:
+
+```txt
+# Ignore specific files
+.DS_Store
+
+# Ignore folders 
+node_modules/
+dist/
+
+# Ignore environment files
+.env
+
+# Ignore files of specific types
+*.log
+
 ```
+
+### The .git Directory
 
 The `.git` directory contains:
 - **HEAD**: Points to current branch
@@ -289,42 +343,6 @@ git remote -v
 # Fix the URL
 git remote set-url origin https://github.com/correct-user/repo.git
 ```
-
-## 🎯 Hands-On Exercise
-
-Let's practice repository operations:
-
-1. **Create a new repository**:
-   ```bash
-   mkdir git-practice
-   cd git-practice
-   git init
-   ```
-
-2. **Create some content**:
-   ```bash
-   echo "# Git Practice Repository" > README.md
-   echo "console.log('Hello, Git!');" > script.js
-   ```
-
-3. **Check status**:
-   ```bash
-   git status
-   ```
-
-4. **Clone an existing repository**:
-   ```bash
-   cd ..
-   git clone https://github.com/octocat/Hello-World.git
-   cd Hello-World
-   ```
-
-5. **Explore the cloned repository**:
-   ```bash
-   git status
-   git log --oneline
-   git remote -v
-   ```
 
 ## 📊 Repository Types Comparison
 

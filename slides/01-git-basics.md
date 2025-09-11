@@ -56,6 +56,12 @@ git --version
 
 Before using Git, you need to configure your identity. This information will be attached to your commits.
 
+### See Current Configuration (press q to exit)
+```bash
+git config --list
+```
+
+
 ### Set Your Name and Email
 ```bash
 # Set your name (use your real name)
@@ -72,6 +78,10 @@ git config --global init.defaultBranch main
 ```
 
 ### Configure Line Endings (Important for cross-platform work)
+
+- There are two main types of line endings: LF (Line Feed, used by macOS/Linux) and CRLF (Carriage Return + Line Feed, used by Windows).
+- To avoid issues when collaborating across different operating systems, configure Git to handle line endings properly.
+
 ```bash
 # On Windows
 git config --global core.autocrlf true
@@ -84,16 +94,10 @@ git config --global core.autocrlf input
 ```bash
 # Use VS Code as default editor
 git config --global core.editor "code --wait"
-
-# Or use nano (simpler for beginners)
-git config --global core.editor nano
 ```
 
 ### View Your Configuration
 ```bash
-# See all configuration
-git config --list
-
 # See specific values
 git config user.name
 git config user.email
@@ -116,7 +120,7 @@ The **working directory** is where you modify files. It's your current workspace
 The **staging area** is where you prepare changes before committing them. It's like a shopping cart before checkout.
 
 ### Branch
-A **branch** is a parallel version of your repository. The default branch is usually called `main`.
+A **branch** is a parallel version of your repository. The default branch is usually called `main`. Sometimes is called `master`, this is being phased out.
 
 ### Remote
 A **remote** is a version of your repository hosted on a server (like GitHub).
@@ -125,7 +129,11 @@ A **remote** is a version of your repository hosted on a server (like GitHub).
 **Cloning** means downloading a repository from a remote server to your local machine.
 
 ### Fork
-**Forking** creates a personal copy of someone else's repository on GitHub.
+**Forking** creates a personal copy of someone else's repository on GitHub. Doesn't necessarily download it to your machine.
+
+### Fetch
+**Fetching** means getting the latest changes from a remote repository without merging them into your local branch.
+
 
 ## 🎯 The Git Workflow
 

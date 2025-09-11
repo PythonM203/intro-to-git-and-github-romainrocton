@@ -138,7 +138,7 @@ git status
 git add .
 git commit -m "Work in progress"
 
-# 2. Stash them
+# 2. Stash them (stash saves changes for later)
 git stash
 
 # 3. Discard them (careful!)
@@ -321,71 +321,6 @@ git log --graph --oneline --all
 # ASCII graph with more detail
 git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
 ```
-
-## 🎯 Hands-On Exercise
-
-Let's practice branch management with a real project:
-
-### Exercise: Feature Development Workflow
-
-1. **Setup Repository**:
-   ```bash
-   mkdir branch-practice
-   cd branch-practice
-   git init
-   echo "# Branch Practice Project" > README.md
-   git add README.md
-   git commit -m "Initial commit"
-   ```
-
-2. **Create Main Project Structure**:
-   ```bash
-   echo "console.log('Main app');" > app.js
-   git add app.js
-   git commit -m "Add main application file"
-   ```
-
-3. **Create Feature Branch**:
-   ```bash
-   git checkout -b feature/navigation
-   git branch --show-current
-   ```
-
-4. **Work on Feature**:
-   ```bash
-   echo "function showNavigation() { console.log('Navigation'); }" > navigation.js
-   git add navigation.js
-   git commit -m "Add navigation functionality"
-   
-   echo "/* Navigation styles */" > navigation.css
-   git add navigation.css
-   git commit -m "Add navigation styles"
-   ```
-
-5. **Create Another Feature**:
-   ```bash
-   git checkout main
-   git checkout -b feature/footer
-   echo "function showFooter() { console.log('Footer'); }" > footer.js
-   git add footer.js
-   git commit -m "Add footer functionality"
-   ```
-
-6. **View All Branches**:
-   ```bash
-   git branch -a
-   git log --graph --oneline --all
-   ```
-
-7. **Switch Between Branches**:
-   ```bash
-   git checkout feature/navigation
-   ls
-   git checkout feature/footer
-   ls
-   git checkout main
-   ls
-   ```
 
 ## 🌳 Branch Strategies
 

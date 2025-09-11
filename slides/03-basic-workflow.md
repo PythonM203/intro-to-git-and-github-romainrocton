@@ -53,15 +53,6 @@ git add -A
 git add -u
 ```
 
-### Interactive Adding
-
-```bash
-# Add files interactively
-git add -i
-
-# Add parts of files (patch mode)
-git add -p filename.txt
-```
 
 ### Add with Patterns
 
@@ -156,10 +147,18 @@ git push --all
 git push --tags
 ```
 
+### Upstream vs Origin revisited 
+- `origin`: default name for your remote repository
+- `upstream`: typically refers to the original repository you forked from
+- When you are the owner, `origin` and `upstream` often point to the same place
+- When you are working in another's repository, `upstream` is the original repo, and `origin` is your fork. 
+- Cloning a repo sets `origin` automatically to the cloned repo URL, not yours. 
+- Cloning a repo does not set `upstream` automatically. You have to add it manually if needed.
+
 ### Push Examples
 
 ```bash
-# First push to a new repository
+# First push to a new repository, the -u flag sets the upstream
 git push -u origin main
 
 # Regular pushes after that
@@ -168,7 +167,7 @@ git push
 # Push a specific branch
 git push origin feature-branch
 
-# Force push (use with caution!)
+# Force push (use with caution!) 
 git push --force
 ```
 
@@ -191,6 +190,8 @@ git pull --rebase
 # Pull all branches
 git fetch --all
 ```
+
+- When you want to work on the last version of the code, always pull first!
 
 ### Pull vs Fetch
 
@@ -406,71 +407,6 @@ git stash list
 # Apply specific stash
 git stash apply stash@{0}
 ```
-
-## 🎯 Hands-On Exercise
-
-Let's practice the complete workflow:
-
-### Exercise: Create a Simple Website
-
-1. **Setup**:
-   ```bash
-   mkdir my-website
-   cd my-website
-   git init
-   ```
-
-2. **Create files**:
-   ```bash
-   # Create HTML file
-   cat << EOF > index.html
-   <!DOCTYPE html>
-   <html>
-   <head>
-       <title>My Website</title>
-       <link rel="stylesheet" href="style.css">
-   </head>
-   <body>
-       <h1>Welcome to My Website</h1>
-       <script src="script.js"></script>
-   </body>
-   </html>
-   EOF
-
-   # Create CSS file
-   echo "body { font-family: Arial, sans-serif; margin: 20px; }" > style.css
-
-   # Create JavaScript file
-   echo "console.log('Website loaded!');" > script.js
-   ```
-
-3. **Check status**:
-   ```bash
-   git status
-   ```
-
-4. **Add and commit**:
-   ```bash
-   git add .
-   git commit -m "Initial website setup with HTML, CSS, and JS"
-   ```
-
-5. **Make changes**:
-   ```bash
-   echo "<p>This is my awesome website!</p>" >> index.html
-   echo "h1 { color: blue; }" >> style.css
-   ```
-
-6. **Add and commit changes**:
-   ```bash
-   git add .
-   git commit -m "Add content and styling"
-   ```
-
-7. **View history**:
-   ```bash
-   git log --oneline
-   ```
 
 ## 📊 Git States Diagram
 
