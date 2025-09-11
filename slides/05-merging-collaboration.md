@@ -17,7 +17,7 @@ A fast-forward merge happens when the target branch hasn't changed since the fea
 
 ```bash
 # Start from main
-git checkout main
+git checkout main # or master
 
 # Create feature branch
 git checkout -b feature/quick-fix

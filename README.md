@@ -2,6 +2,11 @@
 
 Welcome to the **Git & GitHub Fundamentals** course! This comprehensive tutorial is designed for students to learn Git and GitHub through hands-on terminal commands in GitHub Codespaces.
 
+Author: Juan F. Imbet
+Email: juan.imbet@dauphine.psl.eu
+
+Note: This repository was enhanced using GitHub Copilot running Claude 3.7
+
 ## 📚 Course Overview
 
 This course covers essential Git and GitHub concepts with a focus on command-line proficiency. Students will learn both `git` and `gh` (GitHub CLI) commands through practical examples and exercises.
