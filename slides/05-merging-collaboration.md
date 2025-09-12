@@ -77,6 +77,11 @@ After:   main → A → B → D → M
                      ↗ C ↗
 ```
 
+- You can see this merge with the command:
+```bash
+git log --oneline --graph --all
+```
+
 ## 🎯 Basic Merge Commands
 
 ### Standard Merge
@@ -160,10 +165,10 @@ git branch --no-merged
 
 ```bash
 # Create conflict scenario
-git checkout main
-echo "Main version" > conflict.txt
+
+echo "v1\n" > conflict.txt
 git add conflict.txt
-git commit -m "Add main version"
+git commit -m "Add initial version"
 
 git checkout -b feature/conflict
 echo "Feature version" > conflict.txt
@@ -172,6 +177,9 @@ git commit -m "Add feature version"
 
 # Attempt merge
 git checkout main
+echo "Main version" > conflict.txt
+git add conflict.txt
+git commit -m "Add main version"
 git merge feature/conflict
 # CONFLICT!
 
@@ -198,6 +206,11 @@ git add conflict.txt
 
 # Complete merge
 git commit -m "Resolve conflict in conflict.txt"
+```
+
+- In codespaces since you are forking a repository you can delete all commits and start fresh with:
+```bash
+git reset --hard origin/main
 ```
 
 ## 🛠️ Merge Tools
